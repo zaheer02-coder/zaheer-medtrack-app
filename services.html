@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medtrack - Advanced Healthcare Platform</title>
+    <meta name="description" content="Comprehensive healthcare platform connecting patients with top medical professionals">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#3b82f6",
+                        secondary: "#1e40af",
+                        accent: "#10b981",
+                        dark: "#1e293b",
+                        light: "#f8fafc"
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Top Announcement Bar -->
+    <div class="bg-primary text-white text-center py-2 px-4">
+        <p class="text-sm">24/7 Emergency Hotline: <strong>1-800-MEDTRACK</strong></p>
+    </div>
+
+    <!-- Header/Navigation -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-heartbeat text-3xl text-primary"></i>
+                <span class="text-2xl font-bold text-dark">MEDTRACK</span>
+            </div>
+            
+            <div class="hidden md:flex space-x-8">
+                <a href="/home" class="text-dark hover:text-primary font-medium">Home</a>
+                <a href="/services" class="text-dark hover:text-primary font-medium">Services</a>
+                <a href="/doctors" class="text-dark hover:text-primary font-medium">Doctors</a>
+                <a href="/about" class="text-dark hover:text-primary font-medium">About</a>
+                <a href="/contact" class="text-dark hover:text-primary font-medium">Contact</a>
+                <a href="/book_appointment" class="text-dark hover:text-primary font-medium">Appointment</a>
+                <a href="/patient_appointment" class="text-dark hover:text-primary font-medium">Patient Appointment</a>
+                <a href="/patient_phase" class="text-dark hover:text-primary font-medium">Treatment Phase</a>
+
+
+
+            </div>
+            
+        </nav>
+    </header>
+<!-- Hero Section -->
+<section class="hero-gradient text-white min-h-screen flex flex-col items-center justify-center text-center px-4">
+    <body class="bg-gray-100 text-gray-800">
+  <div class="container mx-auto p-6">
+    <h1 class="text-3xl font-bold mb-4 text-blue-700">Our Medical Services</h1>
+    <ul class="list-disc ml-6">
+      <li>General Consultation</li>
+      <li>Cardiology</li>
+      <li>Orthopedic Treatments</li>
+      <li>Neurology Services</li>
+      <li>Pediatrics</li>
+    </ul>
+  </div>
+</section>
+</body>
+</html>
