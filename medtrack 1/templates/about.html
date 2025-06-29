@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medtrack - Advanced Healthcare Platform</title>
+    <meta name="description" content="Comprehensive healthcare platform connecting patients with top medical professionals">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#3b82f6",
+                        secondary: "#1e40af",
+                        accent: "#10b981",
+                        dark: "#1e293b",
+                        light: "#f8fafc"
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Top Announcement Bar -->
+    <div class="bg-primary text-white text-center py-2 px-4">
+        <p class="text-sm">24/7 Emergency Hotline: <strong>1-800-MEDTRACK</strong></p>
+    </div>
+
+    <!-- Header/Navigation -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-heartbeat text-3xl text-primary"></i>
+                <span class="text-2xl font-bold text-dark">MEDTRACK</span>
+            </div>
+            
+            <div class="hidden md:flex space-x-8">
+                <a href="/home" class="text-dark hover:text-primary font-medium">Home</a>
+                <a href="/services" class="text-dark hover:text-primary font-medium">Services</a>
+                <a href="/doctors" class="text-dark hover:text-primary font-medium">Doctors</a>
+                <a href="/about" class="text-dark hover:text-primary font-medium">About</a>
+                <a href="/contact" class="text-dark hover:text-primary font-medium">Contact</a>
+                <a href="/book_appointment" class="text-dark hover:text-primary font-medium">Appointment</a>
+                <a href="/patient_appointment" class="text-dark hover:text-primary font-medium">Patient Appointment</a>
+                <a href="/patient_phase" class="text-dark hover:text-primary font-medium">Treatment Phase</a>
+
+
+
+            </div>
+            
+        </nav>
+    </header>
+<!-- Hero Section -->
+<section class="hero-gradient text-white min-h-screen flex flex-col items-center justify-center text-center px-4">
+    <!-- About Section -->
+    <section id="about" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-dark mb-4">About MediCare Plus</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Our commitment to excellence in healthcare since 2005</p>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-12 items-center">
+                <div class="lg:w-1/2">
+                    <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple116/v4/d1/a3/9d/d1a39d8d-7b0d-f8d1-f7a5-75ed7207fbad/AppIcon-0-0-1x_U007emarketing-0-0-0-7-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/1200x630wa.png" alt="Modern hospital facility with advanced equipment" class="rounded-lg shadow-xl" loading="lazy">
+                </div>
+                <div class="lg:w-1/2">
+                    <h3 class="text-2xl font-bold text-dark mb-4">Our Story</h3>
+                    <p class="text-gray-600 mb-6">Founded in 2005, MediCare Plus has grown from a single clinic to a network of state-of-the-art healthcare facilities across the country. Our mission has always been to provide accessible, high-quality healthcare to all.</p>
+                    
+                    <div class="mb-6">
+                        <h4 class="text-xl font-bold text-dark mb-3">Our Mission</h4>
+                        <p class="text-gray-600 mb-4">To deliver exceptional patient-centered care through innovation, compassion, and clinical excellence.</p>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <h4 class="text-xl font-bold text-dark mb-3">Our Values</h4>
+                        <ul class="space-y-3 text-gray-600">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-primary mt-1 mr-2"></i>
+                                <span>Patient-first approach in all we do</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-primary mt-1 mr-2"></i>
+                                <span>Commitment to medical excellence</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-primary mt-1 mr-2"></i>
+                                <span>Continuous innovation in treatments</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-primary mt-1 mr-2"></i>
+                                <span>Compassionate care for all patients</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Achievements -->
+            <div class="mt-16">
+                <h3 class="text-2xl font-bold text-dark mb-8 text-center">Our Achievements</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-gray-50 p-6 rounded-xl">
+                        <div class="text-primary text-4xl mb-4">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-dark mb-2">Best Hospital Award 2022</h4>
+                        <p class="text-gray-600">Recognized as the top healthcare provider in the region by HealthCare Excellence Awards.</p>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-xl">
+                        <div class="text-primary text-4xl mb-4">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-dark mb-2">JCI Accredited</h4>
+                        <p class="text-gray-600">Fully accredited by Joint Commission International for meeting global healthcare standards.</p>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-xl">
+                        <div class="text-primary text-4xl mb-4">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-dark mb-2">95% Patient Satisfaction</h4>
+                        <p class="text-gray-600">Consistently high patient satisfaction scores across all our facilities.</p>
+                    </div>
+                </div>
+            </div>
+<!-- Testimonials Section -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-dark mb-4">Patient Testimonials</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Hear what our patients say about their experiences at MediCare.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6">"The care I received at MediCare was exceptional. Dr. Johnson took the time to explain everything and made me feel comfortable throughout my treatment."</p>
+                    <div class="flex items-center">
+                        <img src="https://www.shutterstock.com/image-photo/covid19-coronvavirusworking-home-conceptasian-man-260nw-1675324804.jpg" alt="Robert Johnson" class="w-12 h-12 rounded-full mr-4" loading="lazy">
+                        <div>
+                            <h4 class="font-bold text-dark">Robert Johnson</h4>
+                            <p class="text-gray-500 text-sm">Cardiac Patient</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6">"From the moment I walked in, the staff was friendly and professional. The facilities are modern and clean, and my doctor was incredibly knowledgeable."</p>
+                    <div class="flex items-center">
+                        <img src="https://i.pinimg.com/474x/73/43/03/7343032eb70ebc3cdb7ba416962b17db.jpg" alt="Maria Garcia" class="w-12 h-12 rounded-full mr-4" loading="lazy">
+                        <div>
+                            <h4 class="font-bold text-dark">Maria Garcia</h4>
+                            <p class="text-gray-500 text-sm">Pediatric Care</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6">"After my knee surgery, the physical therapy team helped me regain full mobility. I'm back to playing tennis thanks to their expert care."</p>
+                    <div class="flex items-center">
+                        <img src="https://www.shutterstock.com/image-photo/smiling-mature-businessman-shirt-260nw-2188275225.jpg" alt="James Wilson" class="w-12 h-12 rounded-full mr-4" loading="lazy">
+                        <div>
+                            <h4 class="font-bold text-dark">James Wilson</h4>
+                            <p class="text-gray-500 text-sm">Orthopedic Patient</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
