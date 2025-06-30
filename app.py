@@ -1,174 +1,80 @@
-from flask import Flask, render_template, request, session, redirect , url_for, session, request, flash
-from functools import wraps
-from werkzeug.exceptions import BadRequest
-import os
-import boto3
-import uuid
-from botocore.exceptions import ClientError
+from flask import Flask, render_template, request, redirect, url_for, flash
 
 app = Flask(__name__)
-app.secret_key = 'supersecret'
+app.secret_key = 'your_secret_key_here'
 
-# Dummy user store
-users = {
-    "user@example.com": {"password": "1234", "role": "patient"}
-}
-# AWS configuration
-region = 'ap-south-1'  # Change if needed
+# In-memory user data (temporary)
+users = {}
 
-dynamodb = boto3.resource('dynamodb', region_name=region)
-sns = boto3.client('sns', region_name=region)
-
-# DynamoDB tables
-appointments_table = dynamodb.Table('Appointments')
-patient_appointments_table = dynamodb.Table('PatientAppointments')
-
-@app.route('/', methods=['GET', 'POST'])
+# Routes
+@app.route('/')
 def home():
-    page = request.args.get('page', 'login')
-
-    if request.method == 'POST':
-        if page == 'login':
-            email = request.form['email']
-            password = request.form['password']
-            user = users.get(email)
-            if user and user['password'] == password:
-                session['user'] = email
-                return redirect('/dashboard')
-            return "Invalid login. <a href='/?page=login'>Try again</a>"
-
-        elif page == 'signup':
-            email = request.form['email']
-            password = request.form['password']
-            confirm = request.form['confirm_password']
-            user_type = request.form['user_type']
-            if password != confirm:
-                return "Passwords don't match. <a href='/?page=signup'>Try again</a>"
-            users[email] = {"password": password, "role": user_type}
-            return redirect('/?page=login')
-
-    if page == 'signup':
-        return render_template('signup.html')
-    return render_template('login.html')
-
-@app.route('/dashboard')
-def dashboard():
-    if 'user' not in session:
-        return redirect('/?page=login')
-    return render_template('dashboard.html')
+    return render_template('indexpg.html')
 
 @app.route('/about')
 def about():
-    if 'user' not in session:
-        return redirect('/?page=login')
-    return render_template('about.html')
+    return render_template('aboutus.html')
 
 @app.route('/doctors')
 def doctors():
-    if 'user' not in session:
-        return redirect('/?page=login')
-    return render_template('doctors.html')
+    return render_template('doctor_phase.html')
 
-@app.route('/services')
-def services():
-    if 'user' not in session:
-        return redirect('/?page=login')
-    return render_template('services.html')
-
-@app.route('/doctor-profile/<int:doctor_id>')
-def doctor_profile(doctor_id):
-    if 'user' not in session:
-        return redirect('/?page=login')
-
-    doctors = {
-        1: {"name": "Dr. Sarah Johnson", "specialty": "Cardiologist", "experience": "15 years", "university": "Harvard"},
-        2: {"name": "Dr. Michael Chen", "specialty": "Neurologist", "experience": "12 years", "university": "Johns Hopkins"},
-        3: {"name": "Dr. Emily Rodriguez", "specialty": "Pediatrician", "experience": "10 years", "university": "Stanford"},
-        4: {"name": "Dr. David Wilson", "specialty": "Orthopedic Surgeon", "experience": "18 years", "university": "Mayo Clinic"}
-    }
-
-    doctor = doctors.get(doctor_id)
-    if not doctor:
-        return "Doctor not found", 404
-
-    return render_template('doctor_profile.html', doctor=doctor)
-
-@app.route('/contact', methods=['GET', 'POST'])
-def contact():
-    if 'user' not in session:
-        return redirect('/?page=login')
-
+@app.route('/appointment', methods=['GET', 'POST'])
+def appointment():
     if request.method == 'POST':
-        name = request.form.get('name')
-        email = request.form.get('email')
-        subject = request.form.get('subject')
-        message = request.form.get('message')
-        print(f"Contact - Name: {name}, Email: {email}, Subject: {subject}, Message: {message}")
-        return "Thanks for contacting us! <a href='/dashboard'>Go back</a>"
-
-    return render_template('contact.html')
-
-@app.route('/book_appointment', methods=['GET', 'POST'])
-def book_appointment():
-    if 'user' not in session:
-        return redirect('/?page=login')
-
-    success = False
-    if request.method == 'POST':
-        try:
-            appointments_table.put_item(
-                Item={
-                    'email': request.form['email'],
-                    'name': request.form['name'],
-                    'phone': request.form['phone'],
-                    'date': request.form['date'],
-                    'time': request.form['time'],
-                    'doctor': request.form['doctor'],
-                    'notes': request.form['notes']
-                }
-            )
-            success = True
-        except ClientError as e:
-            print("Error saving to DynamoDB:", e)
-
-    return render_template('appointment.html', success=success)
+        data = request.form
+        print("Appointment Data:", data)
+        flash("Appointment booked successfully!", "success")
+        return render_template('appointment.html')
+    return render_template('appointment.html')
 
 @app.route('/patient_appointment', methods=['GET', 'POST'])
 def patient_appointment():
-    if 'user' not in session:
-        return redirect('/?page=login')
-    success = False
-
     if request.method == 'POST':
-        try:
-            patient_appointments_table.put_item(
-                Item={
-                    'contact': request.form['contact'],
-                    'name': request.form['patient_name'],
-                    'age': request.form['age'],
-                    'gender': request.form['gender'],
-                    'appointment_date': request.form['appointment_date'],
-                    'appointment_time': request.form['appointment_time'],
-                    'doctor': request.form['doctor'],
-                    'problem': request.form['problem']
-                }
-            )
-            success = True
-        except ClientError as e:
-            print("Error saving to DynamoDB:", e)
+        data = request.form
+        print("Patient Appointment Data:", data)
+        flash("Patient appointment submitted!", "success")
+        return render_template('patient_appointment.html')
+    return render_template('patient_appointment.html')
 
-    return render_template('patient_appointment.html', success=success)
-
-@app.route('/patient_phase')
-def patient_phase():
-    if 'user' not in session:
-        return redirect('/?page=login')
+@app.route('/treatment')
+def treatment():
     return render_template('patient_phase.html')
 
-@app.route('/logout')
-def logout():
-    session.pop('user', None)
-    return redirect('/?page=login')
+@app.route('/contact', methods=['GET', 'POST'])
+def contact():
+    if request.method == 'POST':
+        data = request.form
+        print("Contact Form:", data)
+        flash("Thank you for contacting us!", "info")
+        return render_template('contact.html')
+    return render_template('contact.html')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        if username in users and users[username] == password:
+            flash("Login successful!", "success")
+            return redirect(url_for('home'))
+        else:
+            flash("Invalid credentials.", "error")
+    return render_template('login.html')
+
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+        confirm = request.form.get('confirm_password')
+        if password == confirm:
+            users[email] = password
+            flash("Account created successfully!", "success")
+            return redirect(url_for('login'))
+        else:
+            flash("Passwords do not match!", "error")
+    return render_template('signup.html')
 
 if __name__ == '__main__':
-    app.run(debug=True , host="0.0.0.0", port=10000)
+    app.run(debug=True)
