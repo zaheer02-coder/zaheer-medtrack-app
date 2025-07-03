@@ -1,11 +1,17 @@
-from flask import Flask, render_template, request, session, redirect , url_for, session, request, flash
+from flask import Flask, render_template, request, session, redirect , url_for, session, request, flash, jsonify,appointments_data
 from functools import wraps
+import smtplib
+import logging
+from email.mime.text import MIMEText
+from datetime import datetime
 from werkzeug.exceptions import BadRequest
+from werkzeug.security import generate_password_hash, check_password_hash
 import os
 import boto3
 import uuid
 from botocore.exceptions import ClientError
 
+# -------------------- Config --------------------
 app = Flask(__name__)
 app.secret_key = 'supersecret'
 
@@ -16,12 +22,88 @@ users = {
 # AWS configuration
 region = 'ap-south-1'  # Change if needed
 
+# -------------------- AWS Setup --------------------
 dynamodb = boto3.resource('dynamodb', region_name=region)
+
+# Email settings
+EMAIL_HOST = 'smtp.@gmail.com'
+EMAIL_PORT = 587
+EMAIL_USER = '@gmail.com'
+EMAIL_PASSWORD = ""
+
+
+# -------------------- Logger Setup --------------------
+
+log_folder = 'logs'
+log_file = os.path.join(log_folder, 'app.log')
+
+if os.path.exists(log_folder):
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(asctime)s - %(levelname)s - %(message)s',
+        handlers=[
+            logging.FileHandler(log_file),
+            logging.StreamHandler()
+        ]
+    )
+else:
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(asctime)s - %(levelname)s - %(message)s'
+    )
+
+logger = logging.getLogger(__name__)
+
+# SNS Setup
 sns = boto3.client('sns', region_name=region)
+ 
+ # -------------------- Helper Functions --------------------
+
+def send_appointments_email(to_email, appointments_summary):
+    try:
+        msg = MIMEText(appointments_summary)
+        msg['Subject'] = 'Your appointment Confirmation'
+        msg['From'] = EMAIL_USER
+        msg['To'] = to_email
+
+        with smtplib.SMTP(EMAIL_HOST, EMAIL_PORT) as server:
+            server.starttls()
+            server.login(EMAIL_USER, EMAIL_PASSWORD)
+            server.send_message(msg)
+
+        logger.info("appointment email sent to %s", to_email)
+    except Exception as e:
+        logger.error("Failed to send email: %s", e)
+def save_appointment_to_dynamodb(order_data):
+    try:
+        appointments_table.put_item(Item=appointments_data)
+        logger.info("appointments saved to DynamoDB: %s", appointments_data['appointments_id'])
+    except Exception as e:
+        logger.error("DynamoDB error: %s", e)
+
+def send_sns_notification(message, phone_number=None, topic_arn=None):
+    try:
+        if phone_number:
+            sns.publish(PhoneNumber=phone_number, Message=message)
+            logger.info(f"SNS SMS sent to {phone_number}")
+        elif topic_arn:
+            sns.publish(TopicArn=topic_arn, Message=message)
+            logger.info(f"SNS message published to topic {topic_arn}")
+        else:
+            logger.info("SNS notification skipped (no phone number or topic)")
+    except Exception as e:
+        logger.error("SNS send failed: %s", e)
 
 # DynamoDB tables
 appointments_table = dynamodb.Table('Appointments')
 patient_appointments_table = dynamodb.Table('PatientAppointments')
+ 
+  # Simple in-memory user storage
+users = {}
+
+# Store reviews and contacts in files
+APPOINTMENTS_FILE = 'Appointments.txt'
+PATINETAPPOINTMNETS_FILE = 'patientAppointments.txt' 
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
