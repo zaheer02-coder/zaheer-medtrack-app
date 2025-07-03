@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, redirect , url_for, session, request, flash, jsonify,appointments_data
+from flask import Flask, render_template, request, session, redirect , url_for, session, request, flash, jsonify
 from functools import wraps
 import smtplib
 import logging
@@ -74,7 +74,7 @@ def send_appointments_email(to_email, appointments_summary):
         logger.info("appointment email sent to %s", to_email)
     except Exception as e:
         logger.error("Failed to send email: %s", e)
-def save_appointment_to_dynamodb(order_data):
+def save_appointment_to_dynamodb(appointments_data):
     try:
         appointments_table.put_item(Item=appointments_data)
         logger.info("appointments saved to DynamoDB: %s", appointments_data['appointments_id'])
