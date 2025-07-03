@@ -13,7 +13,7 @@ from botocore.exceptions import ClientError
 
 # -------------------- Config --------------------
 app = Flask(__name__)
-app.secret_key = 'supersecret'
+app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'fallback_dev_key')
 
 # Dummy user store
 users = {
@@ -26,10 +26,10 @@ region = 'ap-south-1'  # Change if needed
 dynamodb = boto3.resource('dynamodb', region_name=region)
 
 # Email settings
-EMAIL_HOST = 'smtp.@gmail.com'
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_USER = '@gmail.com'
-EMAIL_PASSWORD = ""
+EMAIL_USER = os.environ.get('EMAIL_USER')
+EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD')
 
 
 # -------------------- Logger Setup --------------------
@@ -98,8 +98,6 @@ def send_sns_notification(message, phone_number=None, topic_arn=None):
 appointments_table = dynamodb.Table('Appointments')
 patient_appointments_table = dynamodb.Table('PatientAppointments')
  
-  # Simple in-memory user storage
-users = {}
 
 # Store reviews and contacts in files
 APPOINTMENTS_FILE = 'Appointments.txt'
