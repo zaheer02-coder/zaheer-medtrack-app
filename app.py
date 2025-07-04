@@ -55,7 +55,7 @@ else:
 logger = logging.getLogger(__name__)
 
 # SNS Setup
-sns = boto3.client('sns', region_name= ' us-east-1')
+sns = boto3.client('sns', region_name='us-east-1')
  
  # -------------------- Helper Functions --------------------
 
