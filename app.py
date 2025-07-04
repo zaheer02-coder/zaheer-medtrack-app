@@ -95,6 +95,7 @@ def send_sns_notification(message, phone_number=None, topic_arn=None):
         logger.error("SNS send failed: %s", e)
 
 # DynamoDB tables
+users_table = dynamodb.Table('users')
 appointments_table = dynamodb.Table('Appointments')
 patient_appointments_table = dynamodb.Table('PatientAppointments')
  
