@@ -100,7 +100,7 @@ appointments_table = dynamodb.Table('Appointments')
 patient_appointments_table = dynamodb.Table('PatientAppointments')
  
 
-# Store reviews and contacts in files
+# Store Appointments and patientAppointments in files
 APPOINTMENTS_FILE = 'Appointments.txt'
 PATINETAPPOINTMNETS_FILE = 'patientAppointments.txt' 
 
