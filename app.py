@@ -55,6 +55,7 @@ else:
 logger = logging.getLogger(__name__)
 
 # SNS Setup
+SNS TOPIC ARNos.environ.get('arn:aws:sns:us-east-1:897722702935:medtrack:c68a7d60-02bc-4f7c-87c6-60b907a296bb')
 sns = boto3.client('sns', region_name='us-east-1')
  
  # -------------------- Helper Functions --------------------
